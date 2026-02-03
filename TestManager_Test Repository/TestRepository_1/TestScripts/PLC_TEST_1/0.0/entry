@@ -1,0 +1,192 @@
+<TestScript>
+  <Information>
+    <Name>PLC_TEST_1</Name>
+    <Version>0.0</Version>
+  </Information>
+  <Sequence>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>load_var_script</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>Device_details</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command"># encoding:utf-8
+from __future__ import print_function
+
+import sys
+
+
+from scriptengine import *  # Import necessary modules
+
+def print_tree(treeobj, depth=0):
+  
+
+    # if the current object is a device, we print the name and device identification.
+    if treeobj.is_device:
+        name = treeobj.get_name(True)
+        deviceid = treeobj.get_device_identification()
+        moduleid= treeobj.get_module_identification()
+        
+        print("{0}- {1} {2}".format("--"*depth, name, deviceid,moduleid))
+
+    # we recursively call the print_tree function for the child objects.
+    for child in treeobj.get_children(True):
+        print_tree(child, depth+1)
+
+# We iterate over all top level objects and call the print_tree function for them.
+for obj in projects.primary.get_children():
+    print_tree(obj)<![CDATA[
+]]></Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>llibrary manager</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command"># encoding:utf-8
+#from __future__ import print_function
+#from scriptengine import *
+
+#proj = projects.primary
+
+#app = proj.active_application
+#onlineapp = online.create_online_application(app)
+
+
+from __future__ import print_function
+
+import sys
+
+
+from scriptengine import *  # Import necessary modules
+
+def print_tree(treeobj, depth=0):
+  
+
+    # if the current object is a libraryman, we print the name and device identification.
+    if treeobj.is_libman:
+        name = treeobj.get_name(True)
+        libraryid = treeobj.get_children()
+       
+    print("name, libraryid" )
+# we recursively call the print_tree function for the child objects.
+    for child in treeobj.get_children(True):
+        print_tree(child, depth+1)
+# We iterate over all top level objects and call the print_tree function for them.
+for obj in projects.primary.get_children():
+    print_tree(obj)
+
+#if (loadoption &amp; PLCLOADOPTION_ONLINECHANGE) != 0:
+      #  onlineapp.login(OnlineChangeOption.Force, True)
+#else:
+       # onlineapp.login(OnlineChangeOption.Never, True)
+
+#GLOBALS = all_variables
+
+ #wait 1 second
+#system.delay(1000)
+
+#read value of iVar1
+#value = onlineapp.read_value("Application.GVL_PLANT")
+
+
+#value = onlineapp.read_value("Application.GVL_PLANT.MAX_NODES")
+
+
+# display value in message view or command line
+#print(value)<![CDATA[
+
+]]></Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>HYSTER</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command">from __future__ import print_function
+import sys
+from scriptengine import *
+#from scriptengine.online import OnlineChangeOption, ApplicationState
+
+# Specify the project and PRG name
+#project_path = "C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test"
+
+PRG = "MCLHYST_Implementation(PRG)"
+var_name = "StartSequence.run"  # Replace with your PRG name
+
+# Open the project
+#proj = projects.open("C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test")
+proj = projects.primary
+# Get the active application
+app = proj.active_application
+
+# Create online application
+onlineapp = online.create_online_application(app)
+
+# Login to the device
+onlineapp.login(OnlineChangeOption.Try, True)
+
+#if application is already online
+onlineapp.application_state == ApplicationState.run
+
+# Check if the application is running
+if onlineapp.application_state == ApplicationState.run:
+    print("Application is running.")
+else:
+    print("Application is NOT running.")
+
+try:
+    variable_path = var_name      #Make sure this variable exists in your PRG
+    value = onlineapp.read_value(variable_path)
+    print("PRG: " + var_name)
+except Exception as e:
+   print("Could not read variable '" + variable_path + "' from PRG '" + var_name + "': " + str(e))
+
+# Logout and close project
+onlineapp.logout()
+#proj.close()</Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+  </Sequence>
+</TestScript>

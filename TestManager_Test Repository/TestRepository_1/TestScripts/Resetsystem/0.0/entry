@@ -1,0 +1,79 @@
+<TestScript>
+  <Information>
+    <Name>Resetsystem</Name>
+    <Version>0.0</Version>
+  </Information>
+  <Sequence>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>PLC_RESET</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>Check application</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Online" Verb="CheckApplicationState" />
+          <Configuration>
+            <Entry Name="ApplicationName">Device.Plc Logic.Application</Entry>
+            <Entry Name="ApplicationState">run</Entry>
+            <Entry Name="ApplicationStateDelay">2</Entry>
+            <Entry Name="ApplicationStateTimeout">50</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>RESET_app</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Online" Verb="ResetApplication" />
+          <Configuration>
+            <Entry Name="ApplicationName">Device.Plc Logic.Application</Entry>
+            <Entry Name="ForceImmediateKill">False</Entry>
+            <Entry Name="ResetMode">Warm</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>DeviceMessage</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Devices" Verb="CheckDeviceMessage" />
+          <Configuration>
+            <Entry Name="CheckFor">True</Entry>
+            <Entry Name="ComponentMatchType">Components</Entry>
+            <Entry Name="Components">All</Entry>
+            <Entry Name="DeviceName">Device</Entry>
+            <Entry Name="Range">All</Entry>
+            <Entry Name="RawMsgIncludingParams">True</Entry>
+            <Entry Name="SearchPattern">*</Entry>
+            <Entry Name="SearchType">MessageGlob</Entry>
+            <Entry Name="Severity">All</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+  </Sequence>
+</TestScript>
