@@ -1,0 +1,144 @@
+<TestScript>
+  <Information>
+    <Name>Extended_testScript</Name>
+    <Version>0.0</Version>
+  </Information>
+  <Sequence>
+    <Assign Variable="ProjectPath">C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test\Application - Test Version</Assign>
+    <Assign Variable="ProjectName">SiteSee2.project</Assign>
+    <Assign Variable="ResultsPrepare">
+    </Assign>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>Prepare</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>CloseProject</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Projects" Verb="CloseProject" />
+          <Configuration>
+            <Entry Name="FailNoProject">False</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Load Project</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Projects" Verb="LoadProject" />
+          <Configuration>
+            <Entry Name="FailOnMissingLibraries">True</Entry>
+            <Entry Name="OtherMessageBoxes">ReportAsError</Entry>
+            <Entry Name="PathToProject">C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test\Application - Test Version\SiteSee2.project</Entry>
+            <Entry Name="UpdateAllVersions">True</Entry>
+            <Entry Name="UpdateCompilerVersion">False</Entry>
+            <Entry Name="UpdateLibraryVerions">False</Entry>
+            <Entry Name="UpdateStorageFormate">True</Entry>
+            <Entry Name="UpdateVisualisationProfile">False</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Set Communication parameter</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Devices" Verb="SetCommunicationPath" />
+          <Configuration>
+            <Entry Name="CertificateHandling">1</Entry>
+            <Entry Name="DeviceID" />
+            <Entry Name="DeviceName">Device</Entry>
+            <Entry Name="DeviceType" />
+            <Entry Name="GatewayName">Gateway-1</Entry>
+            <Entry Name="LocalPlc">False</Entry>
+            <Entry Name="TargetAddress">0301.6002</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>login (result variable "ResultPrepare")</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Parameters>
+            <Inputs>
+              <Parameter Name="Results" Variable="ResultsPrepare" />
+            </Inputs>
+          </Parameters>
+          <Command TestRunner="TestManager.Online" Verb="Login" />
+          <Configuration>
+            <Entry Name="AllowReinitPersVars">True</Entry>
+            <Entry Name="ApplicationState">Start</Entry>
+            <Entry Name="DeleteUnknownApps">True</Entry>
+            <Entry Name="LoginPassword">Ourwl123!</Entry>
+            <Entry Name="LoginUsername">Administrator</Entry>
+            <Entry Name="OnlineChange">Keep</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+    <Choose>
+      <When>
+        <Condition>ResultsPrepare="Succeeded"</Condition>
+        <Sequence>
+          <TestCase definesScope="False">
+            <Information>
+              <Title>Check Application State</Title>
+            </Information>
+            <Actions>
+              <Action>
+                <Information>
+                  <Title>iValue1 = 100?</Title>
+                </Information>
+                <Settings>
+                  <Entry Name="Condition" />
+                  <Entry Name="ExecutionDelay">0</Entry>
+                  <Entry Name="ForceEvaluation">False</Entry>
+                  <Entry Name="IgnoreResults">False</Entry>
+                  <Entry Name="ResultVariable" />
+                  <Entry Name="RetryOnError">0|0</Entry>
+                </Settings>
+                <Command TestRunner="TestManager.Monitoring" Verb="CompareVariable" />
+                <Configuration>
+                  <Entry Name="CompareTimeout">500</Entry>
+                  <Entry Name="CompareType">=</Entry>
+                  <Entry Name="CompareValue">100</Entry>
+                  <Entry Name="CompareVariable">Device.Application.GVL_SYSTEM</Entry>
+                </Configuration>
+              </Action>
+            </Actions>
+          </TestCase>
+        </Sequence>
+      </When>
+    </Choose>
+  </Sequence>
+</TestScript>

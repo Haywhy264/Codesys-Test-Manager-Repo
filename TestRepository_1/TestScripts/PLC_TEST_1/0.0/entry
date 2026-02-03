@@ -1,0 +1,454 @@
+<TestScript>
+  <Information>
+    <Name>PLC_TEST_1</Name>
+    <Version>0.0</Version>
+  </Information>
+  <Sequence>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>load_var_script</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>Device_details</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command"># encoding:utf-8
+from __future__ import print_function
+
+import sys
+
+
+from scriptengine import *  # Import necessary modules
+
+def print_tree(treeobj, depth=0):
+  
+
+    # if the current object is a device, we print the name and device identification.
+    if treeobj.is_device:
+        name = treeobj.get_name(True)
+        deviceid = treeobj.get_device_identification()
+        moduleid= treeobj.get_module_identification()
+        
+        print("{0}- {1} {2}".format("--"*depth, name, deviceid,moduleid))
+
+    # we recursively call the print_tree function for the child objects.
+    for child in treeobj.get_children(True):
+        print_tree(child, depth+1)
+
+# We iterate over all top level objects and call the print_tree function for them.
+for obj in projects.primary.get_children():
+    print_tree(obj)<![CDATA[
+]]></Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>llibrary manager</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command"># encoding:utf-8
+#from __future__ import print_function
+#from scriptengine import *
+
+#proj = projects.primary
+
+#app = proj.active_application
+#onlineapp = online.create_online_application(app)
+
+
+from __future__ import print_function
+
+import sys
+
+
+from scriptengine import *  # Import necessary modules
+
+def print_tree(treeobj, depth=0):
+  
+
+    # if the current object is a libraryman, we print the name and device identification.
+    if treeobj.is_libman:
+        name = treeobj.get_name(True)
+        libraryid = treeobj.get_children()
+       
+    print("name, libraryid" )
+# we recursively call the print_tree function for the child objects.
+    for child in treeobj.get_children(True):
+        print_tree(child, depth+1)
+# We iterate over all top level objects and call the print_tree function for them.
+for obj in projects.primary.get_children():
+    print_tree(obj)
+
+#if (loadoption &amp; PLCLOADOPTION_ONLINECHANGE) != 0:
+      #  onlineapp.login(OnlineChangeOption.Force, True)
+#else:
+       # onlineapp.login(OnlineChangeOption.Never, True)
+
+#GLOBALS = all_variables
+
+ #wait 1 second
+#system.delay(1000)
+
+#read value of iVar1
+#value = onlineapp.read_value("Application.GVL_PLANT")
+
+
+#value = onlineapp.read_value("Application.GVL_PLANT.MAX_NODES")
+
+
+# display value in message view or command line
+#print(value)<![CDATA[
+
+]]></Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>HYSTER</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command">from __future__ import print_function
+import sys
+from scriptengine import *
+#from scriptengine.online import OnlineChangeOption, ApplicationState
+
+# Specify the project and PRG name
+#project_path = "C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test"
+
+PRG = "MCLHYST_Implementation(PRG)"
+var_name = "StartSequence.run"  # Replace with your PRG name
+
+# Open the project
+#proj = projects.open("C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\Application for hysterisis test")
+proj = projects.primary
+# Get the active application
+app = proj.active_application
+
+# Create online application
+onlineapp = online.create_online_application(app)
+
+# Login to the device
+onlineapp.login(OnlineChangeOption.Try, True)
+
+#if application is already online
+onlineapp.application_state == ApplicationState.run
+
+# Check if the application is running
+if onlineapp.application_state == ApplicationState.run:
+    print("Application is running.")
+else:
+    print("Application is NOT running.")
+
+try:
+    variable_path = var_name      #Make sure this variable exists in your PRG
+    value = onlineapp.read_value(variable_path)
+    print("PRG: " + var_name)
+except Exception as e:
+   print("Could not read variable '" + variable_path + "' from PRG '" + var_name + "': " + str(e))
+
+# Logout and close project
+#onlineapp.logout()
+#proj.close()</Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Create_Directory</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.FileIO" Verb="CreateDirectory" />
+          <Configuration>
+            <Entry Name="Directory">/data/sitesee</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Check Exist Path</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.FileIO" Verb="CheckExists" />
+          <Configuration>
+            <Entry Name="CheckExists">True</Entry>
+            <Entry Name="CheckPath">/data/sitesee/</Entry>
+            <Entry Name="CheckType">Directory</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>check directory exist</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command">import os
+import sys
+from scriptengine import projects
+
+# Define the directory path you want to check
+target_directory = "/data/sitesee/"
+
+# Check if the directory exists
+if not os.path.exists(target_directory):
+    try:
+        os.makedirs(target_directory)
+        print("Directory created: {}".format(target_directory))
+    except Exception as e:
+        print("Failed to create directory: {}".format(e))
+else:
+    print("Directory already exists: " + target_directory)</Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>System_Event</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command">from scriptengine import *
+import time
+from datetime import datetime
+
+# Locate the 'System_Events' program instance
+system_events_prg = projects.primary.find('System_Events', recursive=True)
+
+# Define system control functions
+def reboot():
+    system.reboot()
+
+def reset_plc(mode):
+    system.reset(mode=mode)
+
+def get_plc_info():
+    system.get_info()
+
+def save_project():
+    system.save_project()
+
+# Map flags to corresponding actions
+system_actions = {
+    'xRebootSystem': reboot,
+    'xResetPLCCold': lambda: reset_plc('cold'),
+    'xResetPLCWarm': lambda: reset_plc('warm'),
+    'xResetPLCOrigin': lambda: reset_plc('origin'),
+    'xGetPLCInfo': get_plc_info,
+    'xSaveSystem': save_project
+}
+
+# Monitor and execute flagged actions
+for flag_name, action in system_actions.items():
+    # Search for the flag variable manually in system_events_prg
+    flag = None
+    if hasattr(system_events_prg, 'children'):
+        for child in system_events_prg.children:
+            if child.name == flag_name:
+                flag = child
+                break
+
+    if flag and flag.value:
+        start_time = datetime.now()
+        print("Started '{}' at {}".format(flag_name, start_time.strftime('%Y-%m-%d %H:%M:%S')))
+
+        try:
+            exec_start = time.time()
+            result = action()
+            exec_end = time.time()
+        except Exception as e:
+            print("Error executing '" + flag_name + "': " + str(e))
+            continue
+
+        end_time = datetime.now()
+        duration = exec_end - exec_start
+
+        print("Finished '{}' at {}".format(flag_name, end_time.strftime('%Y-%m-%d %H:%M:%S')))<![CDATA[
+]]></Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>System_Event_2</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Scripting" Verb="ExecuteScript" />
+          <Configuration>
+            <Entry Name="Command">from scriptengine import *
+import time
+from datetime import datetime
+
+# Locate the 'System(PRG)' program instance
+program_instance = projects.primary.find('System(PRG)', recursive=True)
+
+# Simulated GVL system structure
+GVL_SYSTEM = {
+    'sINIFolder': '',
+    'sINIFolderDflt': 'default_folder',
+    'sRoot': '/root/',
+    'xFileInitReady': True,
+    'xPlantReady': True,
+    'xSensorReady': True,
+    'xControlReady': True,
+    'xServerReady': True,
+    'xLoggingReady': True
+}
+
+# Simulated method handlers
+def Sensor_Load_Handler():
+    time.sleep(0.1)
+
+def Control_Load_Handler():
+    time.sleep(0.2)
+
+def Server_Load_Handler():
+    time.sleep(0.15)
+
+def Logging_Load_Handler():
+    time.sleep(0.25)
+
+# Sequence steps and their corresponding actions
+sequence_steps = [
+    'SYS_INIT',
+    'FILE_INIT',
+    'PLANT_INIT',
+    'SENSOR_INIT',
+    'CONTROL_INIT',
+    'SERVER_INIT',
+    'LOGGING_INIT',
+    'RUN'
+]
+
+# Execution log
+execution_log = []
+
+# Simulate sequence execution
+for step in sequence_steps:
+    start_time = datetime.now()
+    start_ts = time.time()
+
+    # Simulate each step's logic
+    if step == 'SYS_INIT':
+        if GVL_SYSTEM['sINIFolder'] == '':
+            GVL_SYSTEM['sINIFolder'] = GVL_SYSTEM['sINIFolderDflt']
+        time.sleep(0.05)
+
+    elif step == 'FILE_INIT':
+        time.sleep(0.05)
+        GVL_SYSTEM['xFileInitReady'] = True
+
+    elif step == 'PLANT_INIT':
+        time.sleep(0.05)
+
+    elif step == 'SENSOR_INIT':
+        Sensor_Load_Handler()
+
+    elif step == 'CONTROL_INIT':
+        Control_Load_Handler()
+
+    elif step == 'SERVER_INIT':
+        Server_Load_Handler()
+
+    elif step == 'LOGGING_INIT':
+        Logging_Load_Handler()
+
+    elif step == 'RUN':
+        time.sleep(0.05)
+
+    end_ts = time.time()
+    end_time = datetime.now()
+    duration = end_ts - start_ts
+
+    # Log the result
+    execution_log.append({
+        'Step': step,
+        'Start Time': start_time.strftime('%Y-%m-%d %H:%M:%S.%f'),
+        'End Time': end_time.strftime('%Y-%m-%d %H:%M:%S.%f'),
+        'Duration (s)': round(duration, 3)
+    })
+
+# Print execution results
+for entry in execution_log:
+    print(f"Step: {entry['Step']}")
+    print(f"  Start Time: {entry['Start Time']}")
+    print(f"  End Time:   {entry['End Time']}")
+    print(f"  Duration:   {entry['Duration (s)']} seconds\n")</Entry>
+            <Entry Name="ImplicitImport">True</Entry>
+            <Entry Name="ShowTabs">True</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+  </Sequence>
+</TestScript>

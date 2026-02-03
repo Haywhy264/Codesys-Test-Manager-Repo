@@ -1,0 +1,148 @@
+<TestScript>
+  <Information>
+    <Name>PrepareProj_1</Name>
+    <Version>0.0</Version>
+  </Information>
+  <Sequence>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>prepare</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>close Project</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Projects" Verb="CloseProject" />
+          <Configuration>
+            <Entry Name="FailNoProject">True</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Load Project</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Projects" Verb="LoadProject" />
+          <Configuration>
+            <Entry Name="FailOnMissingLibraries">True</Entry>
+            <Entry Name="OtherMessageBoxes">ReportAsError</Entry>
+            <Entry Name="PathToProject">C:\Users\ayomide.adesiyan\OneDrive - Endeco-Technologies\Documents\Codesys Stuff\Cite-See2 Project\iMx6 Config\APPLCATION9-9-2025\emPC-AiMX6 SL\SiteSee2.project</Entry>
+            <Entry Name="UpdateCompilerVersion">False</Entry>
+            <Entry Name="UpdateLibraryVerions">False</Entry>
+            <Entry Name="UpdateStorageFormate">False</Entry>
+            <Entry Name="UpdateVisualisationProfile">False</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Device login</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Online" Verb="Login" />
+          <Configuration>
+            <Entry Name="AllowReinitPersVars">False</Entry>
+            <Entry Name="ApplicationState">Start</Entry>
+            <Entry Name="DeleteUnknownApps">False</Entry>
+            <Entry Name="LoginPassword">Ourwl123!</Entry>
+            <Entry Name="LoginUsername">Administrator</Entry>
+            <Entry Name="OnlineChange">Never</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>Check Application</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Online" Verb="CheckApplicationState" />
+          <Configuration>
+            <Entry Name="ApplicationName">Device.Plc Logic.Application</Entry>
+            <Entry Name="ApplicationState">run</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+    <TestCase definesScope="False">
+      <Information>
+        <Title>Check Device</Title>
+      </Information>
+      <Actions>
+        <Action>
+          <Information>
+            <Title>checkPlcLoad</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Devices" Verb="ExecuteShellCommand" />
+          <Configuration>
+            <Entry Name="DeviceName">Device</Entry>
+            <Entry Name="IgnoreResult">True</Entry>
+            <Entry Name="ShellCommand">plcload</Entry>
+            <Entry Name="Timeout">500</Entry>
+          </Configuration>
+        </Action>
+        <Action>
+          <Information>
+            <Title>CheckDeviceState</Title>
+          </Information>
+          <Settings>
+            <Entry Name="Condition" />
+            <Entry Name="ExecutionDelay">0</Entry>
+            <Entry Name="ForceEvaluation">False</Entry>
+            <Entry Name="IgnoreResults">False</Entry>
+            <Entry Name="ResultVariable" />
+            <Entry Name="RetryOnError">0|0</Entry>
+          </Settings>
+          <Command TestRunner="TestManager.Devices" Verb="CheckDeviceState" />
+          <Configuration>
+            <Entry Name="DeviceBusError">1</Entry>
+            <Entry Name="DeviceConnector">0</Entry>
+            <Entry Name="DeviceDiagnosisAvailable">1</Entry>
+            <Entry Name="DeviceModuleError">1</Entry>
+            <Entry Name="DeviceModuleNotRunning">1</Entry>
+            <Entry Name="DeviceName">Device</Entry>
+            <Entry Name="DeviceNoConfig">1</Entry>
+            <Entry Name="DeviceNoDriver">1</Entry>
+            <Entry Name="DeviceNoModule">1</Entry>
+            <Entry Name="DeviceRunning">1</Entry>
+          </Configuration>
+        </Action>
+      </Actions>
+    </TestCase>
+  </Sequence>
+</TestScript>
